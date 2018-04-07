@@ -1,0 +1,25 @@
+{
+  "name": "spongemock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seerbot157/spongemock.git"
+  },
+  "author": "sheldon tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seerbot157/spongemock/issues"
+  },
+  "homepage": "https://github.com/seerbot157/spongemock#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "discord.js": "^11.3.2",
+    "request": "^2.85.0"
+  }
+}
