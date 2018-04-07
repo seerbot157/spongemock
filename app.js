@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const request = require('request');
+const express = require('express');
+
+let app = express();
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -62,3 +65,8 @@ function transformText(rawCaption, callback) {
 
   return callback(transformed);
 }
+
+let server = app.listen(process.env.PORT || 5000, () => {
+    let port = server.address().port;
+    console.log('spongemock up on port ' + port);
+});

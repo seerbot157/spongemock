@@ -19,6 +19,7 @@
   "homepage": "https://github.com/seerbot157/spongemock#readme",
   "dependencies": {
     "discord.js": "^11.3.2",
+    "express": "^4.16.3",
     "request": "^2.85.0"
   }
 }
