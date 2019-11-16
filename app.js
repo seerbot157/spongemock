@@ -22,9 +22,6 @@ client.on('message', message => {
 client.login(process.env.token);
 
 function processCommand(command, templateid, caption, callback) {
-  console.log(command);
-  console.log(templateid);
-  console.log(caption);
   const captionurl = process.env.caption_url;
   const headers = {
       "Content-Type": "application/json",
@@ -46,7 +43,10 @@ function processCommand(command, templateid, caption, callback) {
   };
 
   request(options, function (error, response, body) {
-      console.log(body.received);
-      return callback(JSON.parse(body))
+    if(!error && response.statusCode == 200) {
+      return callback(JSON.parse(body));
+    } else {
+      return callback(response.statusCode);
+    }
   });
 }
