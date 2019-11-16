@@ -19,10 +19,10 @@ client.on('message', message => {
     message.reply(response)
   });
 });
-client.login(process.env.TOKEN);
+client.login(process.env.token);
 
 function processCommand(command, templateid, caption, callback) {
   request.post(process.env.caption_url, {json: {'command': command, 'templateid': templateid, 'caption': caption}, headers: {'x-api-key': process.env.api_key}}, (error, httpResponse, body) => {
-    return callback(JSON.parse(response))
+    return callback(JSON.parse(body))
   });
 }
