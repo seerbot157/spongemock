@@ -39,8 +39,7 @@ function processCommand(command, templateid, caption, callback) {
       url: captionurl,
       headers: headers,
       method: "POST",
-      body: payload,
-      json: true
+      body: payload
   };
 
   request(options, function (error, response, body) {
