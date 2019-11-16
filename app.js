@@ -34,7 +34,7 @@ function processCommand(command, templateid, caption, callback) {
   const payload = JSON.stringify({
       "command": command,
       "templateid": templateid,
-      "caption": caption
+      "content": caption
   });
 
   const options = {
@@ -47,7 +47,6 @@ function processCommand(command, templateid, caption, callback) {
 
   request(options, function (error, response, body) {
       console.log(body.received);
-      console.log(response);
       return callback(JSON.parse(body))
   });
 }
