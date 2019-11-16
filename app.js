@@ -44,6 +44,7 @@ function processCommand(command, templateid, caption, callback) {
 
   request(options, function (error, response, body) {
     if(!error && response.statusCode == 200) {
+      console.log(body);
       return callback(JSON.parse(body));
     } else {
       console.log(body)
