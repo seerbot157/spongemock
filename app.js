@@ -16,7 +16,15 @@ client.on('message', message => {
 
   if (rawCaption.length === 0) { return; }
   processCommand(command, '', rawCaption, (response) => {
-    message.reply(response)
+    var url;
+    try {
+      url = response['data']['url'];
+    }
+    catch(error) {
+      console.error(error);
+      url = 'no url';
+    }    
+    message.reply(url)
   });
 });
 client.login(process.env.token);
