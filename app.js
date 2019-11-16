@@ -33,6 +33,7 @@ function processCommand(command, templateid, caption, callback) {
       "templateid": templateid,
       "content": caption
   });
+  console.log(payload);
 
   const options = {
       url: captionurl,
@@ -46,6 +47,7 @@ function processCommand(command, templateid, caption, callback) {
     if(!error && response.statusCode == 200) {
       return callback(JSON.parse(body));
     } else {
+      console.log(body)
       return callback(response.statusCode);
     }
   });
