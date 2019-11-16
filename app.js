@@ -22,7 +22,32 @@ client.on('message', message => {
 client.login(process.env.token);
 
 function processCommand(command, templateid, caption, callback) {
-  request.post(process.env.caption_url, {json: {'command': command, 'templateid': templateid, 'caption': caption}, headers: {'x-api-key': process.env.api_key}}, (error, httpResponse, body) => {
-    return callback(JSON.parse(body))
+  console.log(command);
+  console.log(templateid);
+  console.log(caption);
+  const captionurl = process.env.caption_url;
+  const headers = {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.api_key
+  };
+
+  const payload = JSON.stringify({
+      "command": command,
+      "templateid": templateid,
+      "caption": caption
+  });
+
+  const options = {
+      url: captionurl,
+      headers: headers,
+      method: "POST",
+      body: payload,
+      json: true
+  };
+
+  request(options, function (error, response, body) {
+      console.log(body.received);
+      console.log(response);
+      return callback(JSON.parse(body))
   });
 }
