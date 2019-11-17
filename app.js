@@ -31,7 +31,10 @@ client.on('message', message => {
     let reply = '';
     if(command === 'list' || command === 'update') {
       response.forEach(function(template) {
-        reply += template.description + '\n';
+        reply += template.description;
+        if(template.command !== 'NONE') {
+          reply += ' (/' + template.command + ')\n';
+        }
       });
     }
     else if(command === 'bind' || command === 'unbind') {
