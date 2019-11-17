@@ -17,27 +17,39 @@ client.on('message', message => {
   command = command.substr(1);
 
   processCommand(command, '', rawCaption, (response) => {
-    let reply;
+    let replies = [];
+    let discordCharLimit = 2000;
     if(command === 'list' || command === 'update') {
+      let listReply = '';
       response.forEach(function(template) {
-        reply += template.templateid + '\t' + template.description + '\n';
+        let iterativeText = template.templateid + '\t' + template.description + '\n';
+        if(listReply.length + iterativeText.length < discordCharLimit) {
+          listReply += iterativeText;
+        }
+        else {
+          replies.push(listReply);
+        }
       });
     }
     else if(command === 'bind' || command === 'unbind') {
       response.forEach(function(template) {
-        reply += template.templateid + '\t' + template.command + '\n';
+        replies += template.templateid + '\t' + template.command + '\n';
       });
     }
     else {
+      let url = '';
       try {
-        reply = response['data']['url'];
+        url = response['data']['url'];
+        replies.push(url);
       }
       catch(error) {
         console.error(error);
-        reply = 'Unexpected error';
+        replies.push('Unexpected error');
       }    
     }
-    message.reply(reply)
+    replies.forEach((reply) => {
+      message.reply(reply);
+    });
   });
 });
 client.login(process.env.token);
