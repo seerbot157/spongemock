@@ -24,7 +24,7 @@ client.on('message', message => {
     rawCaption = content.slice(command.length + 1, content.length);
   }
 
-  let reserved_commands = ['list', 'update', 'bind', 'unbind'];
+  let reserved_commands = ['list', 'templates', 'update', 'bind', 'unbind'];
   if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
   processCommand(command, new_command, rawCaption, (response) => {
@@ -32,7 +32,7 @@ client.on('message', message => {
     if(command === 'list') {
       response.forEach(function(template) {
         if(template.command !== 'NONE') {
-          reply += template.command + '\n';
+          reply += '/' + template.command + '\n';
         }
       });
     }
