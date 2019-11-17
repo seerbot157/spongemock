@@ -13,18 +13,31 @@ client.on('message', message => {
 
   if(!command.startsWith("/")) { return; }
   let rawCaption = content.slice(command.length + 1, content.length);
-
   if (rawCaption.length === 0) { return; }
+  command = command.substr(1);
+
   processCommand(command, '', rawCaption, (response) => {
-    var url;
-    try {
-      url = response['data']['url'];
+    let reply;
+    if(command === 'list' || command === 'update') {
+      response.forEach(function(template) {
+        reply += template.templateid + '\t' + template.description + '\n';
+      });
     }
-    catch(error) {
-      console.error(error);
-      url = 'no url';
-    }    
-    message.reply(url)
+    else if(command === 'bind' || command === 'unbind') {
+      response.forEach(function(template) {
+        reply += template.templateid + '\t' + template.command + '\n';
+      });
+    }
+    else {
+      try {
+        reply = response['data']['url'];
+      }
+      catch(error) {
+        console.error(error);
+        reply = 'Unexpected error';
+      }    
+    }
+    message.reply(reply)
   });
 });
 client.login(process.env.token);
@@ -35,14 +48,12 @@ function processCommand(command, templateid, caption, callback) {
       "Content-Type": "application/json",
       "x-api-key": process.env.api_key
   };
-
   const payload = JSON.stringify({
       "command": command,
       "templateid": templateid,
       "content": caption
   });
   console.log(payload);
-
   const options = {
       url: captionurl,
       headers: headers,
