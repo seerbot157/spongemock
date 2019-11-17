@@ -19,7 +19,7 @@ client.on('message', message => {
 
   processCommand(command, '', rawCaption, (response) => {
     let replies = [];
-    let discordCharLimit = 2000;
+    let discordCharLimit = 1000;
     if(command === 'list' || command === 'update') {
       let listReply = '';
       response.forEach(function(template) {
