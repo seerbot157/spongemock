@@ -29,13 +29,16 @@ client.on('message', message => {
 
   processCommand(command, new_command, rawCaption, (response) => {
     let reply = '';
-    if(command === 'list' || command === 'update') {
+    if(command === 'list') {
       response.forEach(function(template) {
-        reply += template.description;
         if(template.command !== 'NONE') {
-          reply += ' (/' + template.command + ')';
+          reply += template.command + '\n';
         }
-        reply += '\n';
+      });
+    }
+    else if(command === 'templates') {
+      response.forEach(function(template) {
+        reply += template.description + '\n';
       });
     }
     else if(command === 'bind' || command === 'unbind') {
