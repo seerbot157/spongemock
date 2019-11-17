@@ -33,8 +33,9 @@ client.on('message', message => {
       response.forEach(function(template) {
         reply += template.description;
         if(template.command !== 'NONE') {
-          reply += ' (/' + template.command + ')\n';
+          reply += ' (/' + template.command + ')';
         }
+        reply += '\n';
       });
     }
     else if(command === 'bind' || command === 'unbind') {
