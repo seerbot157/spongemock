@@ -52,6 +52,7 @@ client.on('message', message => {
         reply = 'Unexpected error';
       }    
     }
+    console.log(reply);
     message.reply(reply);
   });
 });
