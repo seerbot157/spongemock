@@ -10,11 +10,12 @@ client.on('message', message => {
   if(message.author.bot)  { return; }
   let content = message.content;
   let command = content.split(" ")[0];
-
   if(!command.startsWith("/")) { return; }
-  let rawCaption = content.slice(command.length + 1, content.length);
-  if (rawCaption.length === 0) { return; }
   command = command.substr(1);
+
+  let reserved_commands = ['list', 'update', 'bind', 'unbind'];
+  let rawCaption = content.slice(command.length + 1, content.length);
+  if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
   processCommand(command, '', rawCaption, (response) => {
     let replies = [];
