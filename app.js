@@ -9,7 +9,9 @@ client.on('ready', () => {
 client.on('message', message => {
   if(message.author.bot)  { return; }
   let content = message.content;
-  let command = content.split(" ")[0];
+  let splitInput = content.split(" ");
+  let command = splitInput[0];
+  let firstArg = splitInput[1];
   if(!command.startsWith("/")) { return; }
   command = command.substr(1);
 
@@ -17,7 +19,7 @@ client.on('message', message => {
   let rawCaption = content.slice(command.length + 1, content.length);
   if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
-  processCommand(command, '', rawCaption, (response) => {
+  processCommand(command, 'firstArg', rawCaption, (response) => {
     let reply = '';
     if(command === 'list' || command === 'update') {
       response.forEach(function(template) {
@@ -25,7 +27,9 @@ client.on('message', message => {
       });
     }
     else if(command === 'bind' || command === 'unbind') {
-      reply = 'not implemented';
+      response.forEach(function(template) {
+        reply += template.description + ' bound to ' + template.command + '\n';
+      });
     }
     else {
       try {
@@ -41,7 +45,7 @@ client.on('message', message => {
 });
 client.login(process.env.token);
 
-function processCommand(command, templateid, caption, callback) {
+function processCommand(command, new_command, caption, callback) {
   const captionurl = process.env.caption_url;
   const headers = {
       "Content-Type": "application/json",
@@ -49,7 +53,7 @@ function processCommand(command, templateid, caption, callback) {
   };
   const payload = JSON.stringify({
       "command": command,
-      "templateid": templateid,
+      "new_command": new_command,
       "content": caption
   });
   console.log(payload);
