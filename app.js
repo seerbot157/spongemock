@@ -32,7 +32,7 @@ client.on('message', message => {
     if(command === 'list') {
       response.forEach(function(template) {
         if(template.command !== 'NONE') {
-          reply += '/' + template.command + '\n';
+          reply += template.description + ' (/' + template.command + ')\n';
         }
       });
     }
