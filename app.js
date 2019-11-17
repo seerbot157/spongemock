@@ -11,21 +11,23 @@ client.on('message', message => {
   let content = message.content;
   let splitInput = content.split(" ");
   let command = splitInput[0];
-  let firstArg = splitInput[1];
   if(!command.startsWith("/")) { return; }
   command = command.substr(1);
+  let new_command = '';
+  let rawCaption = '';
 
-  let reserved_commands = ['list', 'update', 'bind', 'unbind'];
-  let rawCaption;
   if(command === 'bind') {
-    rawCaption = content.slice(command.length + firstArg.length + 3, content.length);// absolute horror
+    new_command = splitInput[1];
+    rawCaption = content.slice(command.length + new_command.length + 3, content.length);// absolute horror
   }
   else {
     rawCaption = content.slice(command.length + 1, content.length);
   }
+
+  let reserved_commands = ['list', 'update', 'bind', 'unbind'];
   if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
-  processCommand(command, firstArg, rawCaption, (response) => {
+  processCommand(command, new_command, rawCaption, (response) => {
     let reply = '';
     if(command === 'list' || command === 'update') {
       response.forEach(function(template) {
