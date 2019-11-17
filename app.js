@@ -17,7 +17,7 @@ client.on('message', message => {
 
   let reserved_commands = ['list', 'update', 'bind', 'unbind'];
   let rawCaption;
-  if(command === 'bind' || command === 'unbind') {
+  if(command === 'bind') {
     rawCaption = content.slice(command.length + firstArg.length + 3, content.length);// absolute horror
   }
   else {
