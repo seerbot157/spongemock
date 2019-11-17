@@ -16,10 +16,16 @@ client.on('message', message => {
   command = command.substr(1);
 
   let reserved_commands = ['list', 'update', 'bind', 'unbind'];
-  let rawCaption = content.slice(command.length + 1, content.length);
+  let rawCaption;
+  if(command === 'bind' || command === 'unbind') {
+    rawCaption = content.slice(command.length + firstArg.length + 1, content.length);
+  }
+  else {
+    rawCaption = content.slice(command.length + 1, content.length);
+  }
   if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
-  processCommand(command, 'firstArg', rawCaption, (response) => {
+  processCommand(command, firstArg, rawCaption, (response) => {
     let reply = '';
     if(command === 'list' || command === 'update') {
       response.forEach(function(template) {
