@@ -18,39 +18,25 @@ client.on('message', message => {
   if (rawCaption.length === 0 && !reserved_commands.includes(command)) { return; }
 
   processCommand(command, '', rawCaption, (response) => {
-    let replies = [];
-    let discordCharLimit = 3000;
+    let reply = '';
     if(command === 'list' || command === 'update') {
-      let listReply = '';
       response.forEach(function(template) {
-        let iterativeText = template.templateid + '\t' + template.description + '\n';
-        if(listReply.length + iterativeText.length < discordCharLimit) {
-          listReply += iterativeText;
-        }
-        else {
-          replies.push(listReply);
-        }
+        reply += template.description + '\n';
       });
     }
     else if(command === 'bind' || command === 'unbind') {
-      response.forEach(function(template) {
-        replies += template.templateid + '\t' + template.command + '\n';
-      });
+      reply = 'not implemented';
     }
     else {
-      let url = '';
       try {
-        url = response['data']['url'];
-        replies.push(url);
+        reply = response['data']['url'];
       }
       catch(error) {
         console.error(error);
-        replies.push('Unexpected error');
+        reply = 'Unexpected error';
       }    
     }
-    replies.forEach((reply) => {
-      message.reply(reply);
-    });
+    message.reply(reply);
   });
 });
 client.login(process.env.token);
